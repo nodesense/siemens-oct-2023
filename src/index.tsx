@@ -9,6 +9,9 @@ import App from './app/App';
 import {Provider} from 'react-redux';
 import store from './app/state/store';
 
+import {BrowserRouter as Router} from 'react-router-dom';
+
+
 // Provider used to pass store reference to React-Redux container component via React Context
 
 const root = ReactDOM.createRoot(
@@ -16,6 +19,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>
  );

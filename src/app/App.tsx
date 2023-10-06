@@ -17,6 +17,59 @@ import Cart from './pages/Cart';
 import ThemeContext from './contexts/ThemeContext';
 import Checkout from './pages/Checkout';
 import ProductListContainer from './cart/containers/ProductList';
+import ReduxCart from './cart/pages/ReduxCart';
+
+import {Switch, Redirect, Route, Link} from 'react-router-dom';
+
+const NotFound = (props: any) => (
+  <div>
+    <h2>Page not found</h2>
+  </div>
+)
+
+
+const About = (props: any) => {
+  console.log("About render props ", props)
+
+  function gotoCart() {
+    props.history.push("/cart")
+  }
+
+  function gotoCounter() {
+    props.history.replace("/counter")
+  }
+
+  return (
+    <div>
+      <h2>About</h2>
+
+      <h4>Contact us</h4>
+
+      <Link to="/contact/India">Indian Office</Link>
+      <Link to="/contact/USA">USA Office</Link>
+
+      <button onClick={gotoCart}>Cart</button>
+      <button onClick={gotoCounter}>Counter</button>
+      
+      
+    </div>
+  )
+
+}
+
+const Contact = (props: any) => {
+  console.log("Contact render ", props)
+
+  // read data from react router params
+  const {country} = props.match.params // params contains url data /:country
+
+  return (
+    <div>
+      <h2>Contact {country}</h2>
+    </div>
+  )
+
+}
 
 // 1st react functional component
 //create and returns virtual dom
@@ -53,6 +106,39 @@ export default function App() {
 
         <HeaderEx title={title} />
 
+        <ThemeContext.Provider value= {color} >
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+
+            <Route path="/counter">
+                <Counter />
+            </Route>
+
+            <Route path="/cart" component={Cart} />
+
+            <Route path="/redux-cart" component = {ReduxCart} />
+
+            <Route path="/products" component={ProductListContainer} />
+
+            <Route path="/about" component={About} />
+
+            {/* /contact/India , here country is parameter, value is India */}
+            <Route path="/contact/:country" component={Contact} />
+            
+
+            <Route path="*" >
+                  <NotFound />
+            </Route>
+
+           </Switch>
+
+
+        </ThemeContext.Provider>
+
+
+{/* 
+        <ReduxCart />
+
         <ProductListContainer />
 
         {show &&   <Checkout /> }
@@ -64,7 +150,8 @@ export default function App() {
 
             <button onClick={ () => toggleShow(!show)}> {show? "Hide": "Show"} </button>
 
-            {show && <Counter /> }
+            {show && <Counter /> } */}
+            
 
             
         <Footer title={title}  />

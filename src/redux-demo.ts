@@ -62,7 +62,7 @@ console.log("STATE AFTER loading false with group bind action creators  ", getSt
 unsubscribe1()// here after subscribe is not called
 
 // returns a thunk function for async execution, NOT A action OBJECT
-const thunkFunc = actions.getProducts()
+const thunkFunc = actions.getProducts({})
 
 console.log("Thunk action function ", thunkFunc)
 

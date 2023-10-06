@@ -38,19 +38,19 @@ export const initProducts = (products: any[]) => ({
 //            DO NOT FORWARD dispatched function to reducers
 
 
-export function getProducts () {
+export function getProducts (axiosParams: any) {
     return function getProductsThunkFunc(dispatch: any, getState: any) {
         // place to write async code like api or timer code
         console.log("async thunk function called by thunk middleware")
 
         // if data already available in store, do not make api call
         // getState().ps.products.length > 0
-        if (getState().ps.products.length > 0) {
-            console.log("Products already present in state, not making api call")
-            return;
-        }
+        // if (getState().ps.products.length > 0) {
+        //     console.log("Products already present in state, not making api call")
+        //     return;
+        // }
         
-        getAllProducts()
+        getAllProducts(axiosParams)
         .then (products => {
             console.log("PRoducts from service ", products)
 
@@ -59,6 +59,10 @@ export function getProducts () {
 
             console.log("STATE AFTER loading products ", getState())
 
+        })
+        .catch (error => {
+            console.log("Erorr while processing request ", error)
+            dispatch(initError(error))
         })
     }
 }

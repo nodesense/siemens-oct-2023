@@ -23,7 +23,11 @@ export const mapDispatchToProps = (dispatch :any, getState:any) => {
     // return list of functions as props to ProductList component
     return {
         // propName: function definition
-        getProductsBindActionDispatcher : bindActionCreators(actions.getProducts, dispatch),
+        // getProductsBindActionDispatcher : bindActionCreators(actions.getProducts, dispatch),
+        getProductsBindActionDispatcher: (axiosParams: any) => {
+            dispatch(actions.getProducts(axiosParams));
+        },
+
         initProducts: bindActionCreators(actions.initProducts, dispatch)
     }
 }
